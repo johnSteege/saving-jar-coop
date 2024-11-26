@@ -31,6 +31,9 @@ const toggleDark = useToggle(isDark);
     </template>
   </Card>
 
+  <RouterLink to="/">Home</RouterLink>
+  <RouterLink to="/about">About</RouterLink>
+
   <RouterView />
 </template>
 
