@@ -1,39 +1,6 @@
-<script setup lang="ts">
-import { RouterView } from "vue-router";
-import { Button, Card } from "primevue";
-import { useDark, useToggle } from "@vueuse/core";
-
-const isDark = useDark();
-const toggleDark = useToggle(isDark);
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <Card style="width: 25rem; overflow: hidden">
-    <template #header>
-      <img alt="user header" src="/src/assets/card-vue.jpg" />
-    </template>
-    <template #title>Advanced Card</template>
-    <template #subtitle>Card subtitle</template>
-    <template #content>
-      <p class="m-0">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed
-        consequuntur error repudiandae numquam deserunt quisquam repellat libero
-        asperiores earum nam nobis, culpa ratione quam perferendis esse,
-        cupiditate neque quas!
-      </p>
-    </template>
-    <template #footer>
-      <div class="flex gap-4 mt-1">
-        <Button label="Cancel" severity="secondary" outlined class="w-full" />
-        <Button label="Save" class="w-full" />
-        <Button label="Dark" class="w-full" @click="toggleDark()" />
-      </div>
-    </template>
-  </Card>
-
-  <RouterLink to="/">Home</RouterLink>
-  <RouterLink to="/about">About</RouterLink>
-
   <RouterView />
 </template>
 
