@@ -34,6 +34,7 @@ app.use(PrimeVue, {
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
+  // Ignore GitHub scan, this is not a secret key: https://firebase.google.com/docs/projects/api-keys
   apiKey: "AIzaSyBOt-VQMVFirNGzdbfnmnBOmMDtoiyKQA8",
   authDomain: "saving-jar-coop.firebaseapp.com",
   projectId: "saving-jar-coop",
