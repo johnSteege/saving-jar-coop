@@ -7,12 +7,33 @@ import { addJar } from "@/data/firebaseHelpers";
 
 const router = useRouter();
 
-const initialValues = ref({
+type jarFormValues = {
+  jarname: string;
+};
+
+const initialValues = ref<jarFormValues>({
   jarname: "",
 });
 
+const resolver = ({ values }: any) => {
+  const errors: Record<string, any[]> = { jarname: [] };
+
+  if (!values.jarname) {
+    errors.jarname = [{ message: "Jar name is required." }];
+  } else if (values.jarname.length < 3) {
+    errors.jarname = [{ message: "Jar name must be at least 3 characters." }];
+  }
+
+  return {
+    errors,
+  };
+};
+
 function onFormSubmit(event: FormSubmitEvent) {
-  console.log(event.states.jarname.value);
+  if (!event.valid) {
+    return;
+  }
+
   addJar({
     name: event.states.jarname.value,
   });
@@ -32,17 +53,28 @@ function onFormSubmit(event: FormSubmitEvent) {
     <Card class="w-6/12">
       <template #title>New Jar</template>
       <template #content>
-        <Form v-slot="$form" :initialValues @submit="onFormSubmit">
-          <InputText name="jarname" type="text" placeholder="Jar Name" fluid />
-          <Message
-            v-if="$form.states?.jarname?.invalid"
-            severity="error"
-            size="small"
-            variant="simple"
-            >Name is required</Message
-          >
+        <Form v-slot="$form" :initialValues :resolver @submit="onFormSubmit">
+          <div class="flex flex-col justify-center items-center gap-4">
+            <InputText
+              name="jarname"
+              type="text"
+              placeholder="Jar Name"
+              fluid
+            />
 
-          <Button type="submit" label="Create"></Button>
+            <!-- @vue-ignore -->
+            <Message
+              v-if="$form.jarname?.invalid"
+              severity="error"
+              size="small"
+              variant="simple"
+            >
+              <!-- @vue-ignore -->
+              {{ $form.jarname.error.message }}</Message
+            >
+
+            <Button type="submit" label="Create"></Button>
+          </div>
         </Form>
       </template>
     </Card>
