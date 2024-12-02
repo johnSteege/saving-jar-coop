@@ -26,3 +26,7 @@ export function addJar(jar: Jar) {
 export function addTransaction(transaction: Transaction) {
   set(dbRef(db, "transactions/" + uuidv7()), transaction);
 }
+
+export function updateTransaction(txid: string, transaction: Transaction) {
+  set(dbRef(db, "transactions/" + txid), transaction);
+}

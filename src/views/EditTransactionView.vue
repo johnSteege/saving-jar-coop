@@ -4,13 +4,18 @@ import { useRouter } from "vue-router";
 import {
   Button,
   Card,
+  DatePicker,
   InputNumber,
   InputText,
   Message,
   Toolbar,
 } from "primevue";
 import { Form, type FormSubmitEvent } from "@primevue/forms";
-import { addJar, addTransaction } from "@/data/firebaseHelpers";
+import {
+  addJar,
+  addTransaction,
+  updateTransaction,
+} from "@/data/firebaseHelpers";
 
 const router = useRouter();
 
@@ -18,7 +23,7 @@ type txFormValues = {
   txid: string;
   jarid: string;
   description: string;
-  date: string;
+  date: Date;
   amount: number;
   note: string;
 };
@@ -27,7 +32,7 @@ const initialValues = ref<txFormValues>({
   txid: "",
   jarid: "",
   description: "",
-  date: "",
+  date: new Date(),
   amount: 0,
   note: "",
 });
@@ -65,13 +70,23 @@ function onFormSubmit(event: FormSubmitEvent) {
     return;
   }
 
-  addTransaction({
-    jar: event.states.jarid.value,
-    description: event.states.description.value,
-    date: event.states.date.value,
-    amount: event.states.amount.value,
-    note: event.states.note.value,
-  });
+  if (event.states.txid) {
+    updateTransaction(event.states.txid.value, {
+      jar: event.states.jarid.value,
+      description: event.states.description.value,
+      date: event.states.date.value.toDateString(),
+      amount: event.states.amount.value,
+      note: event.states.note.value,
+    });
+  } else {
+    addTransaction({
+      jar: event.states.jarid.value,
+      description: event.states.description.value,
+      date: event.states.date.value.toDateString(),
+      amount: event.states.amount.value,
+      note: event.states.note.value,
+    });
+  }
   router.push("/");
 }
 </script>
@@ -125,7 +140,7 @@ function onFormSubmit(event: FormSubmitEvent) {
             </div>
 
             <div>
-              <InputText name="date" type="text" placeholder="Date" fluid />
+              <DatePicker name="date" placeholder="Date" fluid />
               <!-- @vue-ignore -->
               <Message
                 v-if="$form.date?.invalid"
