@@ -16,7 +16,9 @@ export type Transaction = {
 };
 
 const db = getDatabase();
+
 export const jarsRef = dbRef(db, "jars");
+
 export const transactionsRef = dbRef(db, "transactions");
 
 export function addJar(jar: Jar) {

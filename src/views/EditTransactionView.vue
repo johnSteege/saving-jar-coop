@@ -9,13 +9,19 @@ import {
   InputText,
   Message,
   Toolbar,
+  Select,
+  FloatLabel,
 } from "primevue";
 import { Form, type FormSubmitEvent } from "@primevue/forms";
 import {
   addJar,
   addTransaction,
+  jarsRef,
   updateTransaction,
+  type Jar,
 } from "@/data/firebaseHelpers";
+import { useDatabaseList } from "vuefire";
+import { onValue } from "firebase/database";
 
 const router = useRouter();
 
@@ -89,6 +95,15 @@ function onFormSubmit(event: FormSubmitEvent) {
   }
   router.push("/");
 }
+
+const jarsList = useDatabaseList<Jar>(jarsRef);
+const jarsOptions = ref<{ label: string; jarid: string }[]>();
+onValue(jarsRef, () => {
+  jarsOptions.value = jarsList.value.map((jar) => ({
+    label: jar.name,
+    jarid: jar.id,
+  }));
+});
 </script>
 
 <template>
@@ -107,7 +122,16 @@ function onFormSubmit(event: FormSubmitEvent) {
         <Form v-slot="$form" :initialValues :resolver @submit="onFormSubmit">
           <div class="flex flex-col justify-center items-center gap-4">
             <div>
-              <InputText name="jarid" type="text" placeholder="Jar ID" fluid />
+              <FloatLabel style="min-width: 12rem; margin-top: 1rem">
+                <Select
+                  name="jarid"
+                  :options="jarsOptions"
+                  optionLabel="label"
+                  optionValue="jarid"
+                  fluid
+                />
+                <label for="jarid">Jar</label>
+              </FloatLabel>
               <!-- @vue-ignore -->
               <Message
                 v-if="$form.jarid?.invalid"
