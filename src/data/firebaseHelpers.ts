@@ -9,6 +9,7 @@ export type Jar = {
 
 export type Transaction = {
   jar: string;
+  description: string;
   amount: number;
   date: number;
   note?: string;

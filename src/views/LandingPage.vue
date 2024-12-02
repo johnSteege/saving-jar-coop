@@ -28,6 +28,9 @@ const toggleDark = useToggle(isDark);
       <RouterLink to="/new-jar" title="New Jar">
         <Button><i class="pi pi-box" /></Button>
       </RouterLink>
+      <RouterLink to="/edit-transaction" title="New Transaction">
+        <Button><i class="pi pi-plus" /></Button>
+      </RouterLink>
     </template>
   </Toolbar>
 

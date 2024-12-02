@@ -13,6 +13,11 @@ const router = createRouter({
       name: "new-jar",
       component: () => import("../views/NewJarPage.vue"),
     },
+    {
+      path: "/edit-transaction",
+      name: "edit-transaction",
+      component: () => import("../views/EditTransactionView.vue"),
+    },
     // {
     //   path: '/about',
     //   name: 'about',
