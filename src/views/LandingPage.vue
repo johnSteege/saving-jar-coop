@@ -9,6 +9,7 @@ import TabPanel from "primevue/tabpanel";
 
 import JarsListView from "./JarsListView.vue";
 import TransactionsListView from "./TransactionsListView.vue";
+import { RouterLink } from "vue-router";
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
@@ -20,10 +21,13 @@ const toggleDark = useToggle(isDark);
       <span class="text-2xl">Saving Jar</span>
     </template>
     <template #end>
-      <Button @click="toggleDark()"
+      <Button @click="toggleDark()" title="Toggle dark mode"
         ><i class="pi pi-moon" v-if="isDark" />
         <i class="pi pi-sun" v-else />
       </Button>
+      <RouterLink to="/new-jar" title="New Jar">
+        <Button><i class="pi pi-box" /></Button>
+      </RouterLink>
     </template>
   </Toolbar>
 
