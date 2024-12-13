@@ -6,10 +6,13 @@ const transactionsList = useDatabaseList<Transaction>(transactionsRef);
 </script>
 
 <template>
-  <ul>
-    <li v-for="transaction in transactionsList" :key="transaction.id">
-      <div>{{ transaction.id }}</div>
-      <div>{{ transaction }}</div>
-    </li>
-  </ul>
+  <div>
+    <div v-for="transaction in transactionsList" :key="transaction.id">
+      <RouterLink :to="'/edit-transaction/' + transaction.id">
+        <span>{{ transaction.description }}</span>
+      </RouterLink>
+    </div>
+  </div>
 </template>
+
+<style scoped></style>

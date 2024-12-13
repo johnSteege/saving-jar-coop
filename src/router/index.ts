@@ -14,8 +14,14 @@ const router = createRouter({
       component: () => import("../views/NewJarPage.vue"),
     },
     {
-      path: "/edit-transaction",
+      path: "/edit-transaction/:txid",
       name: "edit-transaction",
+      component: () => import("../views/EditTransactionView.vue"),
+      props: true,
+    },
+    {
+      path: "/new-transaction",
+      name: "new-transaction",
       component: () => import("../views/EditTransactionView.vue"),
     },
     // {

@@ -1,4 +1,10 @@
-import { getDatabase, ref as dbRef, onValue, set } from "firebase/database";
+import {
+  getDatabase,
+  ref as dbRef,
+  onValue,
+  set,
+  type DatabaseReference,
+} from "firebase/database";
 import { v7 as uuidv7 } from "uuid";
 import { ref } from "vue";
 
@@ -11,7 +17,7 @@ export type Transaction = {
   jar: string;
   description: string;
   amount: number;
-  date: number;
+  date: string;
   note?: string;
 };
 
@@ -27,6 +33,10 @@ export function addJar(jar: Jar) {
 
 export function addTransaction(transaction: Transaction) {
   set(dbRef(db, "transactions/" + uuidv7()), transaction);
+}
+
+export function getTransaction(txid: string): DatabaseReference {
+  return dbRef(db, "transactions/" + txid);
 }
 
 export function updateTransaction(txid: string, transaction: Transaction) {

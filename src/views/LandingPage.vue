@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useDark, useToggle } from "@vueuse/core";
+import { useDark, useStorage, useToggle } from "@vueuse/core";
 import { Button, Toolbar } from "primevue";
 import Tabs from "primevue/tabs";
 import TabList from "primevue/tablist";
@@ -13,6 +13,8 @@ import { RouterLink } from "vue-router";
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
+
+const tab = useStorage("tab", "jars", sessionStorage);
 </script>
 
 <template>
@@ -28,13 +30,13 @@ const toggleDark = useToggle(isDark);
       <RouterLink to="/new-jar" title="New Jar">
         <Button><i class="pi pi-box" /></Button>
       </RouterLink>
-      <RouterLink to="/edit-transaction" title="New Transaction">
+      <RouterLink to="/new-transaction/" title="New Transaction">
         <Button><i class="pi pi-plus" /></Button>
       </RouterLink>
     </template>
   </Toolbar>
 
-  <Tabs value="jars">
+  <Tabs v-model:value="tab">
     <TabList>
       <Tab value="jars"> Jars </Tab>
       <Tab value="transactions"> Transactions </Tab>
